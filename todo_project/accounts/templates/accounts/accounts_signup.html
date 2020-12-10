@@ -1,0 +1,87 @@
+{% extends 'base_layout.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+    Register
+{% endblock%}
+{% block content %}
+    <form action="" method="POST">
+
+        {% csrf_token %}
+        <div class="col-sm-6 offset-sm-3 modified-forms-accounts">
+            <p class="lead">Register</p>
+            <hr>
+            {{form.username | as_crispy_field}}
+            {{form.password1 | as_crispy_field}}
+            {{form.password2 | as_crispy_field}}
+        
+            <div class="row">
+                <div class="col-sm-6 offset-sm-6">
+                    <button type="submit" class="btn btn-success btn-block">Register</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 offset-sm-6">
+                    <button type="button" id='cancelBtn' class="btn btn-danger btn-block">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script>
+        $('document').ready(function(){
+
+            $('#id_username').attr('autocomplete','off');
+
+            $('#cancelBtn').on('click', function(){
+                window.location.href = "{% url 'accounts:login' %}";
+            })
+
+            {% if user.is_authenticated %}
+                window.location.href = "{%url 'articles:list'%}"
+            {% endif %}
+        })
+
+
+        <script>
+        $('document').ready(function(){
+            
+        })
+    </script>
+    </script>
+    <style>
+
+        .lead{
+            color:white;
+        }
+        .modified-forms-accounts{
+            border:1px solid rgba(19, 18, 18, 0.164);
+            padding:30px 30px;
+            margin-top:10%;
+            border-radius:10px;
+            background-color:rgba(24, 23, 23, 0.425);
+        }
+        label{
+            color:white;
+        }
+
+        .btn-success{
+            background-color:rgba(86, 207, 116, 0.425);
+            border:none !important;
+        }
+
+        .btn-danger{
+            background-color:rgba(212, 73, 73, 0.479);
+            border:none;
+        }
+
+        .btn{
+            margin-bottom:10px;
+        }
+
+        input, #id_username, #id_password1, #id_password2{
+            background-color:rgba(19, 18, 18, 0.521);
+            border:none;
+            color:white;
+        }
+
+    </style>
+{% endblock %}

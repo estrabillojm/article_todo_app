@@ -1,0 +1,72 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}
+    Create Article
+{% endblock%}
+{% block content %}
+    <div class="col-sm-6 offset-sm-3 modified-forms">
+        <form action="" method='POST' enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ forms.title | as_crispy_field }}
+            {{ forms.body | as_crispy_field }}
+            {{ forms.thumbnail | as_crispy_field }}
+            <div class="row">
+                <div class="col-md-4 offset-md-4">    
+                    <button type="submit" id='btnCreate' class="btn btn-success btn-block">{{btnName}}</button>
+                </div>
+                <div class="col-md-4">
+                    <a href="{% url 'articles:list'%}" class="btn btn-block btn-danger">Back</a>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    <style>
+
+        .btn-success{
+            background-color:rgba(86, 207, 116, 0.425);
+            border:none !important;
+        }
+
+        .btn-danger{
+            background-color:rgba(212, 73, 73, 0.479);
+            border:none;
+        }
+        .modified-forms{
+            border:1px solid rgb(46, 44, 44);
+            padding:30px 30px;
+            border-radius:10px;
+            background-color:rgba(34, 33, 33, 0.514);
+            margin-top:100px;
+        }
+
+        input, #id_body, #id_title{
+            background-color:rgba(19, 18, 18, 0.521);
+            border:none;
+            color:white;
+        }
+
+        label{
+            color:white;
+        }
+
+        .btn{
+            margin-bottom:10px !important;
+        }
+    </style>
+
+    <script>
+
+        $('#id_title').attr('autocomplete','off')
+
+
+        $('document').ready(function(){
+            $('form').on('submit', function(){
+                $('#btnCreate').attr('type','button')
+            })
+        })
+    </script>
+
+{% endblock %}

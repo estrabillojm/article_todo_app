@@ -1,0 +1,64 @@
+{% extends 'base_layout.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+    My Todo App
+{% endblock%}
+{% block content %}
+    <div class="col-sm-6 offset-sm-3 modified-forms-accounts">
+        <p class="lead">Login</p>
+        <div class="error-box">
+            <p class="text-center">{{ errmsg }}</p>
+        </div>
+        <form action="" method="POST" autocomplete="off">
+            {% csrf_token %}
+            {{ form.username | as_crispy_field }}
+            {{ form.password | as_crispy_field }}
+            <div class="col-sm-3 offset-sm-9">
+                <div class="row">
+                    <button type="submit" class="btn btn-success btn-block">Login</button>
+                </div>
+            </div>
+            {% if request.GET.next %}
+                <input type="hidden" name='next' value='{{ request.GET.next }}'>
+            {% endif %}
+        </form>
+    </div>
+
+    <script>
+        $('document').ready(function(){
+            $('#id_username').attr('autocomplete','off')
+
+            {% if user.is_authenticated %}
+                window.location.href = "{%url 'articles:list'%}"
+            {% endif %}
+        })
+    </script>
+    <style>
+
+        input, #id_username, #id_password{
+            background-color:rgba(19, 18, 18, 0.521);
+            border:none;
+            color:white;
+        }
+        .modified-forms-accounts{
+            border:1px solid rgba(19, 18, 18, 0.164);
+            padding:30px 30px;
+            margin-top:10%;
+            border-radius:10px;
+            background-color:rgba(24, 23, 23, 0.425);
+        }
+        label, .lead{
+            color:white;
+        }
+
+        .error-box p{
+            color:rgb(236, 152, 152);
+            font-weight:bold;
+        }
+
+        .btn-success{
+            background-color:rgba(86, 207, 116, 0.425);
+            border:none !important;
+        }
+    </style>
+{% endblock %}

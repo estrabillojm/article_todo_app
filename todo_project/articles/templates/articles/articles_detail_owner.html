@@ -1,0 +1,76 @@
+{% extends 'base_layout.html' %}
+{% block title %}
+    {{ article.title }} Details
+{% endblock%}
+{% block content %}
+    <div class="col-sm-8 offset-sm-2 my-marg-top">
+        <img class="img-thumbs img-fluid rounded mx-auto d-block" src="{{ article.thumbnail.url }}" alt="">
+        <hr>
+        <p class="h3 mod-color">{{ article.title.capitalize }}</p>
+        <p class="text-justify mod-para">{{ article.body }}</p>
+        <br><br>
+        <p class="mod-author">Author: {{ article.author }}</p>
+        <br>
+        <p class='mod-date text-right'>{{ article.date }}</p>
+        <br>
+        <hr>
+        <div class="row">
+            <div class="col-sm-4">
+                <a href="{%url 'articles:create' article.id %}" class="btn btn-block btn-primary">Edit</a>
+            </div>
+            <div class="col-sm-4">
+                <form action="/articles/delete/{{ article.id }}/" method='POST'>
+                    {% csrf_token %}
+                    <button type="submit" class='btn btn-danger btn-block'>Delete</button>
+                </form>
+            </div>
+            <div class="col-sm-4">
+                <a href="{%url 'articles:owned'%}" class="btn btn-block btn-success">Back</a>
+            </div>
+        </div>
+    </div>
+    <style>
+        .img-thumbs{
+            max-width:200px;
+        }
+
+        .mod-para{
+            color:white;
+        }
+
+        .mod-date{
+            color:rgb(189, 186, 186)
+        }
+
+        .my-marg-top{
+            margin-top:80px;
+        }
+
+        .mod-color{
+            color:rgb(236, 225, 118);
+        }
+
+        .mod-author{
+            color:rgb(236, 225, 118);
+        }
+
+        .col-sm-4{
+            margin-bottom:5px !important;
+        }
+
+        .btn-primary{
+            background-color:rgba(0, 110, 184, 0.411);
+            border:none !important;
+        }
+
+        .btn-success{
+            background-color:rgba(86, 207, 116, 0.425);
+            border:none !important;
+        }
+
+        .btn-danger{
+            background-color:rgba(212, 73, 73, 0.479);
+            border:none;
+        }
+    </style>
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+{% block title %}
+    Home - ( {{ user }} )
+{% endblock%}
+{% block content %}
+    {% if count == 0 %}
+        <div class="col-sm-6 offset-sm-3 my-img-container">
+            <img class="notFound img-fluid rounded mx-auto d-block" src="{% static 'notfound.png'%}" alt="">
+        </div>    
+    {% endif %}
+    <div class="col-sm-12 my-box ">
+        <div class="row">
+            <div class="col-sm-5 offset-sm-5">
+                <input type="text" id="myInput" class="form-control btn-block search-input" placeholder='Search Here...'>
+            </div>
+        </div>
+
+        
+        {% for article in articles %}
+            <div id="myTable">
+                <div id="myData" class="col-sm-8 offset-sm-2 modified-con-articles">
+                    <h3 class="mod-h3"><a href="{% url 'articles:detail' article.pk %}">{{ article.title.capitalize }}</a></h3>
+                    <p class="mod-author">Author: {{ article.capital }}</p>
+                    <hr class="lead">
+                    <p class="snippets">{{ article.snippets }}<span class='seemore'><a href="{% url 'articles:detail' article.pk %}">see more</a></span></p>
+                    <p class="text-right mod-date">{{ article.date }}</p>
+                </div>
+            </div>
+        {% endfor %}
+        
+    </div>
+
+    <script>
+        $(document).ready(function(){
+          $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable #myData").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+          });
+        });
+    </script>
+
+    <style>
+        .my-img-container{
+            margin-top:70px;
+        }
+
+        .snippets{
+            color:white;
+        }
+
+        .my-box{
+            margin-top:50px;
+        }
+
+        .mod-h3 a, .mod-h3{
+            color:white;
+            padding-top:10px !important;
+        }
+
+        .mod-date{
+            color:rgb(175, 177, 175);
+            font-size:13px;
+        }
+
+        .modified-con-articles{
+            background-color:rgba(31, 30, 30, 0.664);
+            border:1px solid rgba(31, 30, 30, 0.664);
+            border-radius:7px;
+            min-height:150px;
+            max-height:300px;
+            margin-bottom:20px;
+            margin-top:10px;
+        }
+
+        .seemore a{
+            color:rgb(151, 148, 148) !important;
+        }
+
+        .mod-author{
+            color:rgb(231, 230, 154);
+            font-size:15px;
+        }
+
+        .search-input{
+            background-color:rgba(19, 18, 18, 0.521);
+            border:1px solid rgba(204, 199, 199, 0.507);
+            color:white;
+            margin-top:20px;
+        }       
+    </style>
+{% endblock %}
